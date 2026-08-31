@@ -1,0 +1,274 @@
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { ActivityIndicator, FlatList, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import ProductCard from "../../src/components/ProductCard";
+import { CATEGORIES } from "../../src/data/products";
+import { useCart } from "../../src/context/CartContext";
+import { useProducts } from "../../src/context/ProductContext";
+import { useTheme } from "../../src/context/ThemeContext";
+
+const App = () => {
+  const router = useRouter();
+  const { products } = useProducts();
+  const { totalItems } = useCart();
+  const { isDarkMode } = useTheme();
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("All");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const flatListRef = useRef<FlatList>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 700);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const filteredProducts = useMemo(() => {
+    return products.filter((p) => {
+      const matchesCategory = category === "All" || p.category === category;
+      const matchesSearch = p.name
+        .toLowerCase()
+        .includes(search.trim().toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [products, search, category]);
+
+  const handleSelectCategory = (item: string, index: number) => {
+    setCategory(item);
+    flatListRef.current?.scrollToIndex({
+      index,
+      animated: true,
+      viewPosition: 0.5,
+    });
+  };
+
+  return (
+    <View style={[styles.container, isDarkMode && styles.darkContainer]}>
+      <View style={styles.header}>
+        <Pressable onPress={() => router.push("/profile")}>
+          <View style={styles.brand}>
+            <Ionicons name="cart" size={28} color="#FF6B35" />
+            <Text style={[styles.title, isDarkMode && styles.darkText]}>Nova</Text>
+          </View>
+        </Pressable>
+        <Pressable
+          style={[styles.cartIconButton, isDarkMode && styles.darkCard]}
+          onPress={() => router.push("/cart")}
+        >
+          <Ionicons
+            name="cart-outline"
+            size={24}
+            color={isDarkMode ? "#ECEDEE" : "#212529"}
+          />
+          {totalItems > 0 && (
+            <View style={styles.cartBadge}>
+              <Text style={styles.cartBadgeText}>{totalItems}</Text>
+            </View>
+          )}
+        </Pressable>
+      </View>
+
+      <View style={[styles.searchWrapper, isDarkMode && styles.darkSearchWrapper]}>
+        <Ionicons
+          name="search"
+          size={18}
+          color="#868E96"
+          style={styles.searchIcon}
+        />
+        <TextInput
+          style={[styles.searchInput, isDarkMode && styles.darkInputText]}
+          placeholder="Search products..."
+          placeholderTextColor={isDarkMode ? "#868E96" : "#ADB5BD"}
+          value={search}
+          onChangeText={setSearch}
+        />
+      </View>
+
+      <View style={styles.categoryWrapper}>
+        <FlatList
+          ref={flatListRef}
+          horizontal
+          data={CATEGORIES}
+          keyExtractor={(item) => item}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 16 }}
+          onScrollToIndexFailed={(info) => {
+            flatListRef.current?.scrollToOffset({
+              offset: info.averageItemLength * info.index,
+              animated: true,
+            });
+          }}
+          renderItem={({ item, index }) => (
+            <Pressable
+              style={[
+                styles.chip,
+                isDarkMode && styles.darkChip,
+                category === item && styles.chipActive,
+              ]}
+              onPress={() => handleSelectCategory(item, index)}
+            >
+              <Text
+                style={[
+                  styles.chipText,
+                  isDarkMode && styles.darkChipText,
+                  category === item && styles.chipTextActive,
+                ]}
+              >
+                {item}
+              </Text>
+            </Pressable>
+          )}
+        />
+      </View>
+
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#FF6B35" />
+          <Text style={[styles.loadingText, isDarkMode && styles.darkMutedText]}>
+            Loading products...
+          </Text>
+        </View>
+      ) : filteredProducts.length === 0 ? (
+        <View style={styles.emptyContainer}>
+          <Ionicons name="search-outline" size={40} color="#CED4DA" />
+          <Text style={[styles.emptyText, isDarkMode && styles.darkMutedText]}>
+            No products found
+          </Text>
+        </View>
+      ) : (
+        <FlatList
+          data={filteredProducts}
+          keyExtractor={(item) => String(item.id)}
+          numColumns={2}
+          columnWrapperStyle={styles.columnWrapper}
+          contentContainerStyle={styles.listContent}
+          renderItem={({ item }) => (
+            <ProductCard
+              product={item}
+              onPress={() => router.push(`/product/${item.id}`)}
+            />
+          )}
+        />
+      )}
+    </View>
+  );
+};
+
+export default App;
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "#F8F9FA" },
+  darkContainer: { backgroundColor: "#151718" },
+
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingTop: 12,
+    paddingBottom: 8,
+  },
+
+  brand: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+
+  title: { fontSize: 24, fontWeight: "800", color: "#212529" },
+  darkText: { color: "#ECEDEE" },
+  darkMutedText: { color: "#AEB5B8" },
+
+  cartIconButton: {
+    padding: 8,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 12,
+    elevation: 1,
+  },
+  darkCard: {
+    backgroundColor: "#202426",
+  },
+
+  cartBadge: {
+    position: "absolute",
+    top: -2,
+    right: -2,
+    backgroundColor: "#FF6B35",
+    borderRadius: 10,
+    minWidth: 18,
+    height: 18,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 3,
+  },
+
+  cartBadgeText: { color: "#FFFFFF", fontSize: 10, fontWeight: "700" },
+
+  searchWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    marginHorizontal: 16,
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    marginTop: 8,
+    borderWidth: 1,
+    borderColor: "#E9ECEF",
+  },
+  darkSearchWrapper: {
+    backgroundColor: "#202426",
+    borderColor: "#343A40",
+  },
+
+  searchIcon: { marginRight: 8 },
+  searchInput: { flex: 1, paddingVertical: 10, fontSize: 14, color: "#212529" },
+  darkInputText: { color: "#ECEDEE" },
+
+  categoryWrapper: { marginTop: 14, marginBottom: 4 },
+
+  chip: {
+    paddingHorizontal: 14,
+    paddingVertical: 7,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 20,
+    marginRight: 8,
+    borderWidth: 1,
+    borderColor: "#E9ECEF",
+  },
+  darkChip: {
+    backgroundColor: "#202426",
+    borderColor: "#343A40",
+  },
+
+  chipActive: { backgroundColor: "#FF6B35", borderColor: "#FF6B35" },
+  chipText: { fontSize: 13, color: "#495057", fontWeight: "500" },
+  darkChipText: { color: "#ECEDEE" },
+  chipTextActive: { color: "#FFFFFF" },
+
+  listContent: {
+    paddingHorizontal: 10,
+    paddingBottom: 20,
+    paddingTop: 8,
+  },
+
+  columnWrapper: {
+    justifyContent: "flex-start",
+  },
+
+  loadingContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  loadingText: { marginTop: 10, color: "#868E96", fontSize: 13 },
+
+  emptyContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  emptyText: { marginTop: 10, color: "#868E96", fontSize: 14 },
+});
