@@ -298,13 +298,34 @@ const App = () => {
 export default App;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#F8F9FA" },
-  darkContainer: { backgroundColor: "#151718" },
-  scrollContent: { padding: 18, paddingBottom: 40 },
-  subtitle: { fontSize: 13, color: "#868E96", marginBottom: 18 },
-  darkText: { color: "#ECEDEE" },
-  darkMutedText: { color: "#AEB5B8" },
-  label: { fontSize: 13, fontWeight: "600", color: "#212529", marginBottom: 6 },
+  container: {
+    flex: 1,
+    backgroundColor: "#F8F9FA",
+  },
+  darkContainer: {
+    backgroundColor: "#151718",
+  },
+  scrollContent: {
+    padding: 18,
+    paddingBottom: 40,
+  },
+  subtitle: {
+    fontSize: 13,
+    color: "#868E96",
+    marginBottom: 18,
+  },
+  darkText: {
+    color: "#ECEDEE",
+  },
+  darkMutedText: {
+    color: "#AEB5B8",
+  },
+  label: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#212529",
+    marginBottom: 6,
+  },
   imagePicker: {
     width: "100%",
     height: 160,
@@ -315,10 +336,24 @@ const styles = StyleSheet.create({
     borderStyle: "dashed",
     overflow: "hidden",
   },
-  darkImagePicker: { backgroundColor: "#202426", borderColor: "#343A40" },
-  imagePlaceholder: { flex: 1, alignItems: "center", justifyContent: "center" },
-  imagePlaceholderText: { marginTop: 6, fontSize: 12, color: "#ADB5BD" },
-  preview: { width: "100%", height: "100%" },
+  darkImagePicker: {
+    backgroundColor: "#202426",
+    borderColor: "#343A40",
+  },
+  imagePlaceholder: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  imagePlaceholderText: {
+    marginTop: 6,
+    fontSize: 12,
+    color: "#ADB5BD",
+  },
+  preview: {
+    width: "100%",
+    height: "100%",
+  },
   removeImageButton: {
     flexDirection: "row",
     alignItems: "center",
@@ -388,7 +423,11 @@ const styles = StyleSheet.create({
     borderColor: "#343A40",
     color: "#ECEDEE",
   },
-  errorText: { marginTop: 6, fontSize: 12, color: "#E03131" },
+  errorText: {
+    marginTop: 6,
+    fontSize: 12,
+    color: "#E03131",
+  },
   submitButton: {
     flexDirection: "row",
     alignItems: "center",
@@ -398,5 +437,10 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     marginTop: 24,
   },
-  submitButtonText: { color: "#FFFFFF", fontWeight: "700", fontSize: 15, marginLeft: 8 },
+  submitButtonText: {
+    color: "#FFFFFF",
+    fontWeight: "700",
+    fontSize: 15,
+    marginLeft: 8,
+  },
 });

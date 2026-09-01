@@ -270,9 +270,17 @@ const styles = StyleSheet.create({
     gap: 8,
   },
 
-  title: { fontSize: 24, fontWeight: "800", color: "#212529" },
-  darkText: { color: "#ECEDEE" },
-  darkMutedText: { color: "#AEB5B8" },
+  title: {
+    fontSize: 24,
+    fontWeight: "800",
+    color: "#212529",
+  },
+  darkText: {
+    color: "#ECEDEE",
+  },
+  darkMutedText: {
+    color: "#AEB5B8",
+  },
 
   cartIconButton: {
     padding: 8,
@@ -297,7 +305,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 3,
   },
 
-  cartBadgeText: { color: "#FFFFFF", fontSize: 10, fontWeight: "700" },
+  cartBadgeText: {
+    color: "#FFFFFF",
+    fontSize: 10,
+    fontWeight: "700",
+  },
 
   searchWrapper: {
     flexDirection: "row",
@@ -319,9 +331,18 @@ const styles = StyleSheet.create({
     borderColor: "#343A40",
   },
 
-  searchIcon: { marginRight: 8 },
-  searchInput: { flex: 1, paddingVertical: 10, fontSize: 14, color: "#212529" },
-  darkInputText: { color: "#ECEDEE" },
+  searchIcon: {
+    marginRight: 8,
+  },
+  searchInput: {
+    flex: 1,
+    paddingVertical: 10,
+    fontSize: 14,
+    color: "#212529",
+  },
+  darkInputText: {
+    color: "#ECEDEE",
+  },
 
   suggestionsDropdown: {
     position: "absolute",
@@ -339,7 +360,10 @@ const styles = StyleSheet.create({
     elevation: 4,
     overflow: "hidden",
   },
-  darkDropdown: { backgroundColor: "#202426", borderColor: "#343A40" },
+  darkDropdown: {
+    backgroundColor: "#202426",
+    borderColor: "#343A40",
+  },
   suggestionRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -348,13 +372,31 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#F1F3F5",
   },
-  darkSuggestionRow: { borderBottomColor: "#343A40" },
-  suggestionPressed: { backgroundColor: "#FFF1E9" },
-  suggestionText: { fontSize: 13, fontWeight: "600", color: "#212529" },
-  highlightText: { color: "#FF6B35", fontWeight: "800" },
-  suggestionCategory: { fontSize: 11, color: "#868E96", marginTop: 2 },
+  darkSuggestionRow: {
+    borderBottomColor: "#343A40",
+  },
+  suggestionPressed: {
+    backgroundColor: "#FFF1E9",
+  },
+  suggestionText: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#212529",
+  },
+  highlightText: {
+    color: "#FF6B35",
+    fontWeight: "800",
+  },
+  suggestionCategory: {
+    fontSize: 11,
+    color: "#868E96",
+    marginTop: 2,
+  },
 
-  categoryWrapper: { marginTop: 14, marginBottom: 4 },
+  categoryWrapper: {
+    marginTop: 14,
+    marginBottom: 4,
+  },
 
   chip: {
     paddingHorizontal: 14,
@@ -370,10 +412,21 @@ const styles = StyleSheet.create({
     borderColor: "#343A40",
   },
 
-  chipActive: { backgroundColor: "#FF6B35", borderColor: "#FF6B35" },
-  chipText: { fontSize: 13, color: "#495057", fontWeight: "500" },
-  darkChipText: { color: "#ECEDEE" },
-  chipTextActive: { color: "#FFFFFF" },
+  chipActive: {
+    backgroundColor: "#FF6B35",
+    borderColor: "#FF6B35",
+  },
+  chipText: {
+    fontSize: 13,
+    color: "#495057",
+    fontWeight: "500",
+  },
+  darkChipText: {
+    color: "#ECEDEE",
+  },
+  chipTextActive: {
+    color: "#FFFFFF",
+  },
 
   listContent: {
     paddingHorizontal: 10,
@@ -391,7 +444,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  loadingText: { marginTop: 10, color: "#868E96", fontSize: 13 },
+  loadingText: {
+    marginTop: 10,
+    color: "#868E96",
+    fontSize: 13,
+  },
 
   emptyContainer: {
     flex: 1,
@@ -399,5 +456,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  emptyText: { marginTop: 10, color: "#868E96", fontSize: 14 },
+  emptyText: {
+    marginTop: 10,
+    color: "#868E96",
+    fontSize: 14,
+  },
 });

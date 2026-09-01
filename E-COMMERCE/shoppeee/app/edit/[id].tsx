@@ -226,13 +226,36 @@ const App = () => {
 export default App;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#F8F9FA" },
-  darkContainer: { backgroundColor: "#151718" },
-  scrollContent: { padding: 18, paddingTop: 0, paddingBottom: 40 },
-  subtitle: { fontSize: 13, color: "#868E96", marginTop: 0, marginBottom: 18 },
-  darkMutedText: { color: "#AEB5B8" },
-  label: { fontSize: 13, fontWeight: "600", color: "#212529", marginBottom: 6 },
-  darkText: { color: "#ECEDEE" },
+  container: {
+    flex: 1,
+    backgroundColor: "#F8F9FA",
+  },
+  darkContainer: {
+    backgroundColor: "#151718",
+  },
+  scrollContent: {
+    padding: 18,
+    paddingTop: 0,
+    paddingBottom: 40,
+  },
+  subtitle: {
+    fontSize: 13,
+    color: "#868E96",
+    marginTop: 0,
+    marginBottom: 18,
+  },
+  darkMutedText: {
+    color: "#AEB5B8",
+  },
+  label: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#212529",
+    marginBottom: 6,
+  },
+  darkText: {
+    color: "#ECEDEE",
+  },
   imagePicker: {
     width: "100%",
     height: 160,
@@ -243,13 +266,41 @@ const styles = StyleSheet.create({
     borderStyle: "dashed",
     overflow: "hidden",
   },
-  darkImagePicker: { backgroundColor: "#202426", borderColor: "#343A40" },
-  imagePlaceholder: { flex: 1, alignItems: "center", justifyContent: "center" },
-  imagePlaceholderText: { marginTop: 6, fontSize: 12, color: "#ADB5BD" },
-  preview: { width: "100%", height: "100%" },
-  removeImageButton: { flexDirection: "row", alignItems: "center", alignSelf: "flex-start", marginTop: 8 },
-  removeImageText: { marginLeft: 4, fontSize: 12, color: "#E03131", fontWeight: "600" },
-  errorText: { marginTop: 6, fontSize: 12, color: "#E03131" },
+  darkImagePicker: {
+    backgroundColor: "#202426",
+    borderColor: "#343A40",
+  },
+  imagePlaceholder: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  imagePlaceholderText: {
+    marginTop: 6,
+    fontSize: 12,
+    color: "#ADB5BD",
+  },
+  preview: {
+    width: "100%",
+    height: "100%",
+  },
+  removeImageButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "flex-start",
+    marginTop: 8,
+  },
+  removeImageText: {
+    marginLeft: 4,
+    fontSize: 12,
+    color: "#E03131",
+    fontWeight: "600",
+  },
+  errorText: {
+    marginTop: 6,
+    fontSize: 12,
+    color: "#E03131",
+  },
   submitButton: {
     flexDirection: "row",
     alignItems: "center",
@@ -259,7 +310,19 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     marginTop: 16,
   },
-  submitButtonText: { color: "#FFFFFF", fontWeight: "700", fontSize: 15, marginLeft: 8 },
-  cancelButton: { alignItems: "center", justifyContent: "center", paddingVertical: 14 },
-  cancelText: { color: "#868E96", fontWeight: "600" },
+  submitButtonText: {
+    color: "#FFFFFF",
+    fontWeight: "700",
+    fontSize: 15,
+    marginLeft: 8,
+  },
+  cancelButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 14,
+  },
+  cancelText: {
+    color: "#868E96",
+    fontWeight: "600",
+  },
 });
