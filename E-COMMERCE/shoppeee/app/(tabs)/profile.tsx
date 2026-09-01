@@ -136,7 +136,10 @@ const App = () => {
 
   return (
     <SafeAreaView style={[styles.container, isDarkMode && styles.darkContainer]}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={[styles.profileCard, isDarkMode && styles.darkCard]}>
           <Image source={{ uri: profileImage }} style={styles.avatar} />
           <View style={{ marginLeft: 14, flex: 1 }}>

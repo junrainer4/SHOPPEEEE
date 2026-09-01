@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react";
-import { FlatList, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { FlatList, Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import QuantityStepper from "../src/components/QuantityStepper";
 import { useCart } from "../src/context/CartContext";
@@ -47,6 +47,21 @@ const App = () => {
 
   return (
     <SafeAreaView style={[styles.container, isDarkMode && styles.darkContainer]}>
+      {Platform.OS === "web" && (
+        <style>
+          {`
+            ::-webkit-scrollbar {
+              display: none !important;
+              width: 0 !important;
+              height: 0 !important;
+            }
+            * {
+              -ms-overflow-style: none !important;
+              scrollbar-width: none !important;
+            }
+          `}
+        </style>
+      )}
       {cart.length === 0 ? (
         <View style={styles.emptyContainer}>
           <Ionicons
@@ -71,6 +86,7 @@ const App = () => {
             keyExtractor={(item) => String(item.product.id)}
             renderItem={renderItem}
             contentContainerStyle={styles.listContent}
+            showsVerticalScrollIndicator={false}
           />
           <View style={[styles.footer, isDarkMode && styles.darkFooter]}>
             <View style={styles.totalRow}>

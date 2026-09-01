@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Stack, useRouter } from "expo-router";
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Platform, Pressable, Text, View } from "react-native";
 import { CartProvider } from "../src/context/CartContext";
 import { OrderProvider } from "../src/context/OrderContext";
 import { ProductProvider } from "../src/context/ProductContext";
@@ -12,15 +12,34 @@ const RootLayoutNav = () => {
   const router = useRouter();
 
   return (
-    <Stack
-      initialRouteName="login"
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: isDarkMode ? "#202426" : "#FFFFFF",
-        },
-        headerTintColor: isDarkMode ? "#ECEDEE" : "#212529",
-      }}
-    >
+    <>
+      {Platform.OS === "web" && (
+        <style>
+          {`
+            /* Hide scrollbar for Chrome, Safari and Opera */
+            *::-webkit-scrollbar {
+              display: none !important;
+              width: 0 !important;
+              height: 0 !important;
+              background: transparent !important;
+            }
+            /* Hide scrollbar for IE, Edge and Firefox */
+            * {
+              -ms-overflow-style: none !important;
+              scrollbar-width: none !important;
+            }
+          `}
+        </style>
+      )}
+      <Stack
+        initialRouteName="login"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: isDarkMode ? "#202426" : "#FFFFFF",
+          },
+          headerTintColor: isDarkMode ? "#ECEDEE" : "#212529",
+        }}
+      >
       <Stack.Screen name="login" options={{ headerShown: false }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
@@ -100,6 +119,7 @@ const RootLayoutNav = () => {
       <Stack.Screen name="product/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="edit/[id]" options={{ title: "Edit Product" }} />
     </Stack>
+  </>
   );
 };
 

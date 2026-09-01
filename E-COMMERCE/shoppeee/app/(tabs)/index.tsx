@@ -84,6 +84,15 @@ const App = () => {
             input:focus {
               outline: none !important;
             }
+            ::-webkit-scrollbar {
+              display: none !important;
+              width: 0 !important;
+              height: 0 !important;
+            }
+            * {
+              -ms-overflow-style: none !important;
+              scrollbar-width: none !important;
+            }
           `}
         </style>
       )}
@@ -237,6 +246,7 @@ const App = () => {
           numColumns={2}
           columnWrapperStyle={styles.columnWrapper}
           contentContainerStyle={styles.listContent}
+          showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <ProductCard
               product={item}

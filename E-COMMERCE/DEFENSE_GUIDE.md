@@ -8,10 +8,12 @@
 1. **SECTION 1:** Project Architecture & File System (`app/` vs `src/`)
 2. **SECTION 2:** How Screens Are Connected & Navigation Explained
 3. **SECTION 3:** Teacher's 5 Core Instructions & Exact Code Mapping
-4. **SECTION 4:** Screen-by-Screen Code Breakdown (All 8 Screens)
-5. **SECTION 5:** Difference Between `router.push()` and `router.replace()`
-6. **SECTION 6:** Rapid-Fire Defense Q&A Cheat Sheet (Short & Punchy)
-7. **SECTION 7:** Live Demo Step-by-Step Presentation Script
+4. **SECTION 4:** Elements vs. Components Explained (Core vs Custom Components)
+5. **SECTION 5:** Screen-by-Screen Code Breakdown (All 8 Screens)
+6. **SECTION 6:** Difference Between `router.push()` and `router.replace()`
+7. **SECTION 7:** Master UI & "CSS" Styling Index (Screens, Products, Cards, Buttons, Inputs, Icons, Modals)
+8. **SECTION 8:** Rapid-Fire Defense Q&A Cheat Sheet (Short & Punchy)
+9. **SECTION 9:** Live Demo Step-by-Step Presentation Script
 
 ---
 
@@ -181,7 +183,49 @@ shoppeee/
 
 ---
 
-# SECTION 4: Screen-by-Screen Code Breakdown
+# SECTION 4: Elements vs. Components Explained
+
+### ❓ Question: "What is the difference between an Element and a Component in React?"
+* **Answer:** *"A **Component** is the factory function (the blueprint) that accepts props and manages state. A React **Element** is the virtual object produced by JSX (like `<View>` or `<Text>`) describing what should appear on screen."*
+
+### Table 4.1: Component vs. Element Comparison
+| Characteristic | React Component | React Element |
+|---|---|---|
+| **What It Is** | A reusable function or class. | A lightweight JavaScript object describing UI. |
+| **The Analogy** | The **Blueprint / Recipe**. | The **Actual Building / Meal**. |
+| **Can Have State?** | **YES** (`useState`, hooks, lifecycle). | **NO** (Immutable object). |
+| **Code Example** | `const ProductCard: React.FC<Props> = (...) => { ... }` | `<ProductCard product={item} />` or `<Text>Hello</Text>` |
+
+---
+
+### Table 4.2: Built-in Core Components vs. Custom Components
+
+#### A. Core Built-In Components (Provided by React Native)
+| React Native Core Component | HTML/Web Equivalent | Purpose in This Project | Where Used in Code |
+|---|---|---|---|
+| **`<View>`** | `<div>` | Container box for layout and Flexbox positioning | `src/components/ProductCard.tsx:30` |
+| **`<Text>`** | `<p>`, `<span>`, `<h1>` | Displays typography, prices, names, and titles | `app/login.tsx:50` |
+| **`<TextInput>`** | `<input type="text">` | Controlled input box for text, email, password, and numbers | `src/components/FormField.tsx:26` |
+| **`<Pressable>`** | `<button>` | Modern clickable surface with pressed feedback | `app/login.tsx:91` |
+| **`<Image>`** | `<img>` | Renders product photos with `onError` fallback handling | `src/components/ProductCard.tsx:32` |
+| **`<FlatList>`** | Virtualized `<ul>`/`<li>` | High-performance 2-column product grid and category list | `app/(tabs)/index.tsx:234` |
+| **`<ScrollView>`** | Overflow scroll container | Enables scrolling for forms and product detail pages | `app/add.tsx:136` |
+| **`<SafeAreaView>`** | Viewport boundary wrapper | Protects screen from device notches, punches, and home bars | `app/login.tsx:26` |
+| **`<ActivityIndicator>`** | Spinner loader | Circular loading indicator while async actions execute | `app/add.tsx:285` |
+| **`<Modal>`** | Pop-up `<dialog>` | Pop-up overlay for Order Summary and Success receipts | `app/product/[id].tsx:262` |
+| **`<Switch>`** | Checkbox toggle switch | Interactive Dark / Light mode toggle switch | `app/(tabs)/profile.tsx:187` |
+| **`<KeyboardAvoidingView>`** | Form view lifter | Lifts text inputs above the on-screen mobile keyboard | `app/login.tsx:41` |
+
+#### B. Custom Reusable Components (Created in `src/components/`)
+| Custom Component | Props Received | Encapsulated Logic & Visual Features | Where Defined |
+|---|---|---|---|
+| **`<ProductCard />`** | `product`, `onPress` | Image fallback handling, Out-of-Stock badge, formatted price (`toLocaleString()`), and star rating pill | `src/components/ProductCard.tsx` |
+| **`<FormField />`** | `label`, `value`, `onChangeText`, `placeholder`, `error`, `keyboardType` | Label header, styled input box with red error borders, and inline red error text | `src/components/FormField.tsx` |
+| **`<QuantityStepper />`** | `quantity`, `onIncrement`, `onDecrement`, `min`, `max` | Minus button, live count text, and Plus button bounded by safety limits (min 1, max stock) | `src/components/QuantityStepper.tsx` |
+
+---
+
+# SECTION 5: Screen-by-Screen Code Breakdown
 
 ### 1. `app/login.tsx` (Login Screen)
 * **State Hooks (`lines 12–14`):** `email`, `password`, `showPassword` for credential input and password mask toggle.
@@ -225,12 +269,12 @@ shoppeee/
 
 ---
 
-# SECTION 5: Difference Between `router.push()` and `router.replace()`
+# SECTION 6: Difference Between `router.push()` and `router.replace()`
 
 ### 🎙️ The 1-Sentence Answer
 > *"**`router.push()`** adds a new screen to the top of the history stack so the user can press Back, while **`router.replace()`** replaces and clears the current screen from history so the user cannot go back."*
 
-### Table 5.1: Comparison Matrix
+### Table 6.1: Comparison Matrix
 | Characteristic | `router.push()` | `router.replace()` |
 |---|---|---|
 | **History Stack Effect** | Pushes a new screen on TOP. | Overwrites/swaps the current screen. |
@@ -240,7 +284,81 @@ shoppeee/
 
 ---
 
-# SECTION 6: Rapid-Fire Defense Q&A Cheat Sheet
+# SECTION 7: Master UI & "CSS" Styling Index
+
+> **How React Native Styles Work:** React Native does NOT use external `.css` files. Instead, every visual element in JSX is connected to a `StyleSheet.create()` object located at the bottom of the file using camelCase CSS properties.
+
+---
+
+### 1. 📱 Screens & Base Containers
+| UI Component | Where in JSX | Style Object in `styles` | Key Style Properties |
+|---|---|---|---|
+| **Screen Root Container** | `SafeAreaView` in all screens | `styles.container`<br>`styles.darkContainer` | `flex: 1, backgroundColor: "#F8F9FA"` (Light) vs `"#151718"` (Dark) |
+| **Scrollable Body** | `ScrollView` in Add, Details, Profile | `styles.scrollContent` | `padding: 18, paddingBottom: 40, flexGrow: 1` |
+| **Header Bar** | Top of Details & Profile screens | `styles.header`<br>`styles.darkHeader` | `flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderBottomWidth: 1` |
+| **Bottom Tab Bar** | `app/(tabs)/_layout.tsx` | `tabBarStyle` in `Tabs` | `backgroundColor: isDarkMode ? "#202426" : "#FFFFFF", borderTopColor: "#E9ECEF"` |
+
+---
+
+### 2. 🛍️ Product Cards & Images
+| UI Component | Where in JSX | Style Object in `styles` | Key Style Properties |
+|---|---|---|---|
+| **2-Column Product Card** | `src/components/ProductCard.tsx:22` | `styles.card`<br>`styles.darkCard` | `width: "47%", borderRadius: 14, backgroundColor: "#FFFFFF", elevation: 2, shadowOpacity: 0.08` |
+| **Product Card Image Box** | `src/components/ProductCard.tsx:30` | `styles.imageBox`<br>`styles.image` | `width: "100%", height: 130, resizeMode: "cover", overflow: "hidden"` |
+| **Catalog Row (Explore)** | `app/(tabs)/explore.tsx:88` | `styles.row`<br>`styles.darkRow` | `flexDirection: "row", alignItems: "center", padding: 10, borderRadius: 14, marginBottom: 10` |
+| **Row Thumbnail Photo** | `app/(tabs)/explore.tsx:90` | `styles.rowImage` | `width: 56, height: 56, borderRadius: 10` |
+| **Hero Image (Details)** | `app/product/[id].tsx:136` | `styles.imageWrapper`<br>`styles.image` | `width: "100%", height: 280, alignItems: "center", justifyContent: "center"` |
+| **Image Upload Box (Add)** | `app/add.tsx:145` | `styles.imagePicker`<br>`styles.darkImagePicker` | `width: "100%", height: 160, borderRadius: 14, borderStyle: "dashed", borderWidth: 1` |
+
+---
+
+### 3. 🔘 Buttons & Interactive Steppers
+| UI Component | Where in JSX | Style Object in `styles` | Key Style Properties |
+|---|---|---|---|
+| **Sign In Button** | `app/login.tsx:91` | `styles.loginButton`<br>`styles.loginButtonText` | `backgroundColor: "#FF6B35", borderRadius: 12, paddingVertical: 14, alignItems: "center", color: "#FFFFFF", fontWeight: "700"` |
+| **Submit / Save Button** | `app/add.tsx:279`<br>`app/edit/[id].tsx:199` | `styles.submitButton`<br>`styles.submitButtonText` | `backgroundColor: "#FF6B35", borderRadius: 12, paddingVertical: 14, flexDirection: "row", alignItems: "center", justifyContent: "center"` |
+| **Buy Now Button** | `app/product/[id].tsx:244` | `styles.buyNowButton`<br>`styles.buyNowText` | `backgroundColor: "#FF6B35", borderRadius: 12, paddingVertical: 14, flex: 1, alignItems: "center"` |
+| **Add to Cart (Outline)** | `app/product/[id].tsx:238` | `styles.addToCartOutlineButton` | `borderWidth: 1.5, borderColor: "#FF6B35", borderRadius: 12, paddingVertical: 14, flex: 1` |
+| **Floating Action Button (`+`)** | `app/(tabs)/explore.tsx:120` | `styles.fab` | `position: "absolute", right: 20, bottom: 24, width: 54, height: 54, borderRadius: 27, backgroundColor: "#FF6B35", elevation: 4` |
+| **Delete Button (Red)** | `app/product/[id].tsx:210` | `styles.deleteButton`<br>`styles.deleteButtonText` | `backgroundColor: "#FFF5F5", borderWidth: 1, borderColor: "#FFC9C9", borderRadius: 12, color: "#E03131", fontWeight: "700"` |
+| **Quantity Stepper `[-] 1 [+]`** | `src/components/QuantityStepper.tsx:24` | `styles.container`<br>`styles.button`<br>`styles.quantity` | `flexDirection: "row", alignItems: "center", borderWidth: 1, borderColor: "#DEE2E6", borderRadius: 10, paddingHorizontal: 12` |
+
+---
+
+### 4. 📝 Form Inputs & Text Fields
+| UI Component | Where in JSX | Style Object in `styles` | Key Style Properties |
+|---|---|---|---|
+| **Standard Form Field** | `src/components/FormField.tsx:26` | `styles.input`<br>`styles.inputError` | `borderWidth: 1, borderColor: "#DEE2E6", borderRadius: 10, paddingHorizontal: 12, paddingVertical: 10, fontSize: 14` |
+| **Search Bar Input** | `app/(tabs)/index.tsx:129` | `styles.searchWrapper`<br>`styles.searchInput` | `flexDirection: "row", alignItems: "center", backgroundColor: "#FFFFFF", borderRadius: 12, borderWidth: 1, paddingHorizontal: 12` |
+| **Search Autocomplete Box** | `app/(tabs)/index.tsx:143` | `styles.suggestionsDropdown` | `position: "absolute", top: 50, left: 16, right: 16, backgroundColor: "#FFFFFF", borderRadius: 12, elevation: 4` |
+| **Category Filter Chips** | `app/(tabs)/index.tsx:191` | `styles.chip`<br>`styles.chipActive` | `paddingHorizontal: 14, paddingVertical: 7, borderRadius: 20, borderWidth: 1, borderColor: "#E9ECEF", backgroundColor: "#FF6B35" (Active)` |
+| **Red Error Text** | `src/components/FormField.tsx:40` | `styles.errorText` | `color: "#E03131", fontSize: 12, marginTop: 4` |
+
+---
+
+### 5. ⭐ Icons & Badges (Ionicons & Overlays)
+| UI Component | Where in JSX | Style Object in `styles` | Key Style Properties |
+|---|---|---|---|
+| **Out of Stock Badge** | `src/components/ProductCard.tsx:49` | `styles.outOfStockBadge`<br>`styles.outOfStockText` | `position: "absolute", top: 8, left: 8, backgroundColor: "#212529", borderRadius: 8, color: "#FFFFFF", fontSize: 10` |
+| **Header Cart Counter Badge** | `app/(tabs)/index.tsx:112` | `styles.cartBadge`<br>`styles.cartBadgeText` | `position: "absolute", top: -2, right: -2, backgroundColor: "#FF6B35", minWidth: 18, height: 18, borderRadius: 10, color: "#FFFFFF"` |
+| **Star Rating Badge** | `app/product/[id].tsx:149` | `styles.ratingBadge`<br>`styles.ratingText` | `flexDirection: "row", alignItems: "center", backgroundColor: "#FFF9DB", paddingHorizontal: 8, paddingVertical: 4, borderRadius: 8` |
+| **Password Eye Toggle Icon** | `app/login.tsx:83` | `<Ionicons name={show ? ...} />` | `name="eye-outline" / "eye-off-outline", size={20}, color="#868E96"` |
+| **Trash Can Delete Icon** | `app/cart.tsx:43` | `styles.deleteButton` | `<Ionicons name="trash-outline" size={20} color="#E03131" />` |
+| **Camera Badge on Avatar** | `app/(tabs)/profile.tsx:210` | `styles.avatarCameraBadge` | `position: "absolute", bottom: 0, right: 0, width: 26, height: 26, borderRadius: 13, backgroundColor: "#FF6B35", borderWidth: 2` |
+
+---
+
+### 6. 🪟 Modals & Popups
+| UI Component | Where in JSX | Style Object in `styles` | Key Style Properties |
+|---|---|---|---|
+| **Darkened Backdrop Overlay** | `app/product/[id].tsx:263` | `styles.modalOverlay` | `flex: 1, backgroundColor: "rgba(0,0,0,0.5)", justifyContent: "flex-end"` |
+| **Slide-Up Bottom Sheet** | `app/product/[id].tsx:264` | `styles.modalContent`<br>`styles.darkModalContent` | `backgroundColor: "#FFFFFF", borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20` |
+| **Centered Success Dialog** | `app/product/[id].tsx:343` | `styles.modalOverlayCenter`<br>`styles.successCard` | `backgroundColor: "#FFFFFF", borderRadius: 20, padding: 24, alignItems: "center", width: "100%"` |
+| **Order Receipt Card** | `app/(tabs)/profile.tsx:254` | `styles.orderItemCard` | `backgroundColor: "#F8F9FA", borderRadius: 12, padding: 14, marginBottom: 10` |
+
+---
+
+# SECTION 8: Rapid-Fire Defense Q&A Cheat Sheet
 
 ### Part A: Components & UI
 1. **Q: Why use `FlatList` instead of `ScrollView` for product lists?**
@@ -274,7 +392,7 @@ shoppeee/
 
 ---
 
-# SECTION 7: Live Demo Step-by-Step Presentation Script
+# SECTION 9: Live Demo Step-by-Step Presentation Script
 
 Follow this exact flow during your live demonstration:
 

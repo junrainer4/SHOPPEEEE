@@ -132,7 +132,10 @@ const App = () => {
       </View>
 
       <View style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
           <View style={[styles.imageWrapper, isDarkMode && styles.darkImageWrapper]}>
             {hasValidImage ? (
               <Image

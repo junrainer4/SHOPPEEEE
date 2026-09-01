@@ -126,6 +126,7 @@ const App = () => {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
       >
         <Text style={[styles.subtitle, isDarkMode && styles.darkMutedText]}>
           Update the details for {form.name ? `"${form.name}"` : "this product"}.

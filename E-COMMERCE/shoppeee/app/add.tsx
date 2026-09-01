@@ -136,6 +136,7 @@ const App = () => {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
       >
         <Text style={[styles.subtitle, isDarkMode && styles.darkMutedText]}>
           Fill in the details below to list a new product.
